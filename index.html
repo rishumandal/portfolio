@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rishu — UX Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #F5F0E8;
+    --ivory: #FAF7F2;
+    --parchment: #EDE6D6;
+    --gold: #A8894A;
+    --gold-light: #C9A96E;
+    --gold-dark: #7A6233;
+    --forest: #2C3A2E;
+    --forest-mid: #3D4F40;
+    --charcoal: #1C1C1A;
+    --ink: #2E2B26;
+    --muted: #6B6355;
+    --border: rgba(168,137,74,0.25);
+    --border-soft: rgba(168,137,74,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'EB Garamond', Georgia, serif;
+    background-color: var(--ivory);
+    color: var(--ink);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(250,247,242,0.95);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    padding: 0 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--forest);
+    letter-spacing: 0.08em;
+  }
+
+  .nav-logo span {
+    color: var(--gold);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    background: var(--forest);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 5rem 5rem;
+    position: relative;
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--gold);
+  }
+
+  .hero-ornament {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-ornament::before {
+    content: '———';
+    opacity: 0.5;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-subtitle {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 200;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+    margin-bottom: 3.5rem;
+    margin-top: 1rem;
+  }
+
+  .hero-desc {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.05rem;
+    color: rgba(245,240,232,0.75);
+    max-width: 380px;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    font-style: italic;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    background: var(--gold);
+    border: none;
+    padding: 0.85rem 2.2rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-outline {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: transparent;
+    border: 1px solid rgba(245,240,232,0.3);
+    padding: 0.85rem 2.2rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-right {
+    background: var(--parchment);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 4rem;
+    position: relative;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .hero-portrait-frame {
+    width: 300px;
+    height: 380px;
+    position: relative;
+  }
+
+  .portrait-border {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--gold);
+  }
+
+  .portrait-border::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .portrait-inner {
+    position: absolute;
+    inset: 16px;
+    background: var(--forest-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    color: var(--cream);
+  }
+
+  .portrait-initials {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: 0.1em;
+  }
+
+  .portrait-name-tag {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    align-items: flex-start;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--gold-dark);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--border);
+    margin-top: 0.5rem;
+  }
+
+  /* SECTION BASE */
+  section {
+    padding: 7rem 0;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 4rem;
+  }
+
+  .section-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+
+  .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 3.5vw, 3.8rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--forest);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-heading em {
+    font-style: italic;
+    color: var(--gold-dark);
+  }
+
+  /* ABOUT */
+  #about {
+    background: var(--cream);
+    border-top: 1px solid var(--border-soft);
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-aside {
+    border-right: 1px solid var(--border);
+    padding-right: 4rem;
+  }
+
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--forest);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--gold);
+  }
+
+  .about-skills {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .about-skills li {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .about-skills li::before {
+    content: '◆';
+    font-size: 0.4rem;
+    color: var(--gold);
+  }
+
+  .about-text p {
+    font-size: 1.05rem;
+    color: var(--ink);
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+    opacity: 0.85;
+  }
+
+  .about-text p:first-of-type::first-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.8rem;
+    font-weight: 300;
+    float: left;
+    line-height: 0.75;
+    padding-right: 0.15em;
+    margin-top: 0.1em;
+    color: var(--gold-dark);
+  }
+
+  /* PROJECTS */
+  #projects {
+    background: var(--ivory);
+  }
+
+  .projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid var(--border-soft);
+    padding-bottom: 3rem;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+  }
+
+  .project-card {
+    background: var(--ivory);
+    padding: 2.5rem 2.5rem 3rem;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.4s;
+    overflow: hidden;
+  }
+
+  .project-card:hover {
+    background: var(--cream);
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 2.5rem; right: 2.5rem;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .project-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .project-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    transition: color 0.4s;
+  }
+
+  .project-card:hover .project-num {
+    color: rgba(168,137,74,0.2);
+  }
+
+  .project-tag {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .project-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--forest);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .project-desc {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 360px;
+  }
+
+  .project-arrow {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    opacity: 0;
+    transform: translate(-8px, 8px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  .project-card:hover .project-arrow {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  /* PROCESS */
+  #process {
+    background: var(--forest);
+    padding: 7rem 0;
+  }
+
+  #process .section-heading {
+    color: var(--cream);
+  }
+
+  #process .section-label {
+    color: var(--gold-light);
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 4rem;
+    border: 1px solid rgba(168,137,74,0.2);
+  }
+
+  .process-step {
+    padding: 2.5rem 2rem;
+    border-right: 1px solid rgba(168,137,74,0.2);
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .process-step:last-child { border-right: none; }
+
+  .process-step:hover { background: rgba(168,137,74,0.06); }
+
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .step-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+
+  .step-desc {
+    font-size: 0.88rem;
+    color: rgba(245,240,232,0.5);
+    line-height: 1.7;
+  }
+
+  /* EDUCATION */
+  #education {
+    background: var(--cream);
+  }
+
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .edu-card {
+    border: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    position: relative;
+    background: var(--ivory);
+    transition: border-color 0.3s;
+  }
+
+  .edu-card:hover { border-color: var(--gold); }
+
+  .edu-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 2rem;
+    width: 3rem;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .edu-year {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .edu-degree {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--forest);
+    margin-bottom: 0.4rem;
+  }
+
+  .edu-school {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--parchment);
+    border-top: 1px solid var(--border-soft);
+  }
+
+  .contact-inner {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .contact-inner .section-label {
+    justify-content: center;
+  }
+
+  .contact-inner .section-label::after { display: none; }
+
+  .contact-inner .section-heading {
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-text {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 3rem;
+    line-height: 1.8;
+  }
+
+  .contact-email {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--gold-dark);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.3rem;
+    transition: border-color 0.3s, color 0.3s;
+    display: inline-block;
+    margin-bottom: 3rem;
+  }
+
+  .contact-email:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    background: var(--charcoal);
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--cream);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-brand span { color: var(--gold); }
+
+  .footer-copy {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: rgba(245,240,232,0.3);
+    text-transform: uppercase;
+  }
+
+  /* DIVIDER ORNAMENT */
+  .ornament-divider {
+    text-align: center;
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.5em;
+    opacity: 0.4;
+    margin: 2rem 0;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-left > * {
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+  }
+
+  .hero-ornament { animation-delay: 0.2s; }
+  .hero-title { animation-delay: 0.4s; }
+  .hero-subtitle { animation-delay: 0.5s; }
+  .hero-desc { animation-delay: 0.6s; }
+  .hero-cta { animation-delay: 0.8s; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 7rem 2rem 4rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-aside { border-right: none; padding-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 1.5rem; }
+    .container { padding: 0 2rem; }
+    footer { padding: 1.5rem 2rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Ri<span>s</span>hu</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-ornament">UX & UI Designer</p>
+    <h1 class="hero-title">
+      Designing for<br>
+      <em>clarity.</em><br>
+      Creating with<br>
+      emotion.
+    </h1>
+    <p class="hero-subtitle">Portfolio — 2026</p>
+    <p class="hero-desc">
+      I craft digital experiences that marry timeless refinement with purposeful simplicity — where every element earns its place.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Selected Work</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-portrait-frame">
+      <div class="portrait-border"></div>
+      <div class="portrait-inner">
+        <div class="portrait-initials">R.</div>
+        <div class="portrait-name-tag">Rishu · Designer</div>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Years Learning</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <div class="stat-num">12</div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Attention to Detail</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-aside">
+        <p class="section-label">About</p>
+        <blockquote class="about-quote">
+          "A designer who blends softness and structure — where warmth meets precision."
+        </blockquote>
+        <ul class="about-skills">
+          <li>User Experience Design</li>
+          <li>Interface Architecture</li>
+          <li>Visual Communication</li>
+          <li>Prototyping & Testing</li>
+          <li>Design Systems</li>
+          <li>Figma & Adobe Suite</li>
+        </ul>
+      </div>
+      <div class="about-text">
+        <h2 class="section-heading" style="margin-bottom:2rem;">
+          I'm <em>Rishu</em>, a UX designer<br>with an eye for the essential.
+        </h2>
+        <p>
+          My work is guided by a quiet philosophy — that the finest experiences are never accidental. They emerge from deep listening, careful observation, and an unflinching commitment to the people who will inhabit the spaces I design.
+        </p>
+        <p>
+          I am drawn to clients who appreciate the timeless over the trendy, the considered over the conspicuous. I believe great design need not announce itself — it simply works, beautifully and without effort.
+        </p>
+        <p>
+          Currently pursuing CSIT, I bridge the world of technology and aesthetics, translating complex human needs into experiences that feel, above all, natural.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="projects-header">
+      <div>
+        <p class="section-label">Selected Work</p>
+        <h2 class="section-heading">Projects of<br><em>distinction.</em></h2>
+      </div>
+      <p style="font-family:'Josefin Sans',sans-serif; font-size:0.65rem; letter-spacing:0.2em; color:var(--muted); text-transform:uppercase; max-width:200px; text-align:right;">A curated selection of work that defines my practice</p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-num">01</div>
+        <p class="project-tag">UX Design · Housing</p>
+        <h3 class="project-name">Fair Home</h3>
+        <p class="project-desc">A platform for finding safe, affordable housing — designed with empathy and dignity at its core. Every interaction crafted to reduce friction for vulnerable users.</p>
+        <span class="project-arrow">→</span>
+      </div>
+      <div class="project-card">
+        <div class="project-num">02</div>
+        <p class="project-tag">UI Design · E-commerce</p>
+        <h3 class="project-name">Clothing Brand</h3>
+        <p class="project-desc">A refined online shopping experience that conveys brand elegance through simplicity — clean typography, deliberate whitespace, intuitive flow.</p>
+        <span class="project-arrow">→</span>
+      </div>
+      <div class="project-card">
+        <div class="project-num">03</div>
+        <p class="project-tag">Product Design</p>
+        <h3 class="project-name">Research & Strategy</h3>
+        <p class="project-desc">End-to-end user research, persona development, and journey mapping for a client seeking to reimagine their digital presence from the ground up.</p>
+        <span class="project-arrow">→</span>
+      </div>
+      <div class="project-card">
+        <div class="project-num">04</div>
+        <p class="project-tag">Design Systems</p>
+        <h3 class="project-name">Component Library</h3>
+        <p class="project-desc">A cohesive design system built for scale — consistent, accessible components that allow a team to build at speed without sacrificing quality.</p>
+        <span class="project-arrow">→</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <p class="section-label">My Approach</p>
+    <h2 class="section-heading">How I work.</h2>
+    <div class="process-steps">
+      <div class="process-step">
+        <p class="step-num">I</p>
+        <h3 class="step-name">Discover</h3>
+        <p class="step-desc">I listen before I draw. Understanding the people, the context, and the constraints is where every worthy solution begins.</p>
+      </div>
+      <div class="process-step">
+        <p class="step-num">II</p>
+        <h3 class="step-name">Define</h3>
+        <p class="step-desc">Clarity before creativity. I distil research into a sharp design brief — the north star that keeps every decision purposeful.</p>
+      </div>
+      <div class="process-step">
+        <p class="step-num">III</p>
+        <h3 class="step-name">Design</h3>
+        <p class="step-desc">From rough sketches to refined interfaces. I explore broadly, then narrow with rigour until the solution feels inevitable.</p>
+      </div>
+      <div class="process-step">
+        <p class="step-num">IV</p>
+        <h3 class="step-name">Deliver</h3>
+        <p class="step-desc">Handoff that empowers developers. Detailed specifications, design tokens, and continued collaboration until launch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <p class="section-label">Education</p>
+    <h2 class="section-heading"><em>Formation</em><br>& credentials.</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <p class="edu-year">2024 — Present</p>
+        <h3 class="edu-degree">CSIT — Computer Science & IT</h3>
+        <p class="edu-school">Vedas College</p>
+      </div>
+      <div class="edu-card">
+        <p class="edu-year">2020 — 2023</p>
+        <h3 class="edu-degree">Science with Bio</h3>
+        <p class="edu-school">Omega International College</p>
+      </div>
+      <div class="edu-card">
+        <p class="edu-year">2025 — Certification</p>
+        <h3 class="edu-degree">UI/UX Design Foundations</h3>
+        <p class="edu-school">Professional Course</p>
+      </div>
+      <div class="edu-card">
+        <p class="edu-year">Ongoing</p>
+        <h3 class="edu-degree">Self-directed Study</h3>
+        <p class="edu-school">Design Systems · Accessibility · Motion</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <p class="section-label">Let's work together</p>
+      <h2 class="section-heading">Begin a<br><em>conversation.</em></h2>
+      <p class="contact-text">
+        I take on a select number of projects each season — ones where I can give my full attention and craft something genuinely worthy of both our names.
+      </p>
+      <a href="mailto:mrishu829@gmail.com" class="contact-email">mrishu829@gmail.com</a>
+      <div style="display:flex; gap:2rem; justify-content:center; flex-wrap:wrap;">
+        <a href="#" class="btn-primary">Send an Enquiry</a>
+        <a href="#" class="btn-outline" style="border-color:var(--border); color:var(--muted);">View LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Ri<span>s</span>hu</div>
+  <p class="footer-copy">© 2026 · UX Designer · All rights reserved</p>
+</footer>
+
+</body>
+</html>
